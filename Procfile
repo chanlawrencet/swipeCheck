@@ -1,2 +1,2 @@
-web: gunicorn tz_lister:app
+web: gunicorn app:app
 
