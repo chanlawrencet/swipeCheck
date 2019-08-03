@@ -6,6 +6,15 @@ const divStyle = {
     marginTop: '20vh',
 };
 
+const backStyled = {
+    marginTop: '70px'
+};
+const howToStyled = {
+    marginTop: '50px'
+};
+const fileUploadMessageStyle = {
+    marginTop: '50px'
+};
 
 class Upload extends React.Component {
 
@@ -24,7 +33,7 @@ class Upload extends React.Component {
         const {selectedFile} = this.state;
         return (
             <div style={divStyle}>
-                <h1>Let's get started</h1>
+                <h1>Let's get started!</h1>
                 <br/>
                 <Button
                     variant="outlined"
@@ -37,29 +46,30 @@ class Upload extends React.Component {
                         onChange={this.handleFileUpload}
                     />
                 </Button>
-                <br/>
-                <br/>
-                <br/>
-                {selectedFile ? (
-                    <div>
-                        <div>Selected File: {selectedFile.name}</div>
-                        <br/>
-                        <br/>
-                        {selectedFile.type !== 'text/csv' ? (
-                            <div>Oops! You have to upload a .csv file!</div>
-                        ):(
-                            <Button variant="outlined" color="primary" href={'/upload'}>
-                                upload
-                            </Button>
-                        )}
-                    </div>
-                    ):
-                    (<div>No file uploaded.</div>)}
-                <br/>
-                <br/>
-                <br/>
-                <div>
+                <div style={fileUploadMessageStyle}>
+                    {selectedFile ? (
+                            <div>
+                                <div>Selected File: {selectedFile.name}</div>
+                                <br/>
+                                <br/>
+                                {selectedFile.type !== 'text/csv' ? (
+                                    <div>Oops! You have to upload a .csv file!</div>
+                                ):(
+                                    <Button variant="outlined" color="primary" href={'/configure'} onClick={()=>{console.log('clicked!');}}>
+                                        upload
+                                    </Button>
+                                )}
+                            </div>
+                        ):
+                        (<div>No file uploaded.</div>)}
+                </div>
+                <div style={howToStyled}>
                     <a href='/howTo'>How do I find this file?</a>
+                </div>
+                <div style={backStyled}>
+                    <Button variant="outlined" color="primary" href={'/'}>
+                        home
+                    </Button>
                 </div>
             </div>
         );
