@@ -2,7 +2,7 @@ import React from "react";
 import Upload from "./Upload";
 import Settings from "./Settings";
 import WelcomeMessage from "./Welcome";
-import Results from "./Results";
+import Results from "./Results/Index";
 
 const divStyle = {
     textAlign : 'center',
@@ -10,11 +10,7 @@ const divStyle = {
 };
 
 const footer = {
-    position: 'fixed',
-    left: '0',
-    bottom: '10px',
-    width: '100%',
-    textAlign: 'center',
+    marginTop: '80px'
 };
 
 class Main extends React.Component{

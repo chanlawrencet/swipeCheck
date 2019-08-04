@@ -12,6 +12,7 @@
     "@nivo/line": "^0.59.3",
     "@nivo/pie": "^0.59.1",
     "disable-browser-back-navigation": "^0.1.0",
+    "moment": "^2.24.0",
     "papaparse": "^5.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -20,6 +21,7 @@
     "react-router-dom": "^5.0.1",
     "react-router-native": "^5.0.1",
     "react-scripts": "3.0.1",
+    "recharts": "^1.6.2",
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {

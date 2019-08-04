@@ -1,7 +1,7 @@
 
 
 export const getAPIBase = () => {
-    const environment = 'prod';
+    const environment = 'local';
     switch (environment) {
         case 'local':
             return 'http://localhost:3001/';
