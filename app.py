@@ -20,42 +20,31 @@ def getPlot(csvData, settings):
                 # take larger balance (end-of-day balance)
                 data[stringDT] = i['Balance'] if i['Balance'] > data[stringDT] else data[stringDT]
 
-    list = []
-
-    for i in data:
-        list.insert(0, {
-                         'label': data[i],
-                         'x': i,
-                         'y': data[i]
-                     })
 
     startDate = datetime.strptime('09/01/2018', '%m/%d/%Y')
-    endDate = datetime.strptime('12/31/2018', '%m/%d/%Y')
+    endDate = datetime.strptime('12/20/2018', '%m/%d/%Y')
     numMeals = settings['mealPlan']
     timeD = endDate - startDate
     perDay = numMeals / timeD.days
     currDate = startDate
     currMeals = numMeals
 
-    list2 = []
+    ideal = dict()
     while currDate < endDate:
-        list2.append({
-            'x': currDate.strftime('%Y-%m-%d'),
-            'y': round(currMeals, 0)
-        })
+        ideal[currDate.strftime('%Y-%m-%d')] = currMeals
         currMeals = currMeals - perDay
         currDate = currDate + timedelta(days=1)
 
-    print(list2)
-    return ([{
-        'id': 'Your Usage',
-        'data': list
-    },
-        {
-            'id': 'Ideal Usage',
-            'data': list2
-        }
-    ])
+    list = []
+    for i in ideal:
+        list.insert(0, {
+            'date': i,
+            'yourUsage': data[i] if i in data else None,
+            'idealUsage': round(ideal[i], 0),
+        })
+
+    return list
+
 
 def getCalendar(csvData):
     data = dict()
@@ -106,9 +95,7 @@ class HelloWorld(Resource):
         getCalendar(csvData)
 
         return {
-            'plot': {
-                'data': getPlot(csvData, settings)
-            },
+            'plot': getPlot(csvData, settings),
 
             'stats': {
                 'perLocation': getPerLocation(csvData),
