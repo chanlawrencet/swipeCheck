@@ -3,11 +3,18 @@ import Upload from "./Upload";
 import Settings from "./Settings";
 import WelcomeMessage from "./Welcome";
 import Results from "./Results";
-import disableBrowserBackButton from 'disable-browser-back-navigation';
 
 const divStyle = {
     textAlign : 'center',
     marginTop: '20vh',
+};
+
+const footer = {
+    position: 'fixed',
+    left: '0',
+    bottom: '10px',
+    width: '100%',
+    textAlign: 'center',
 };
 
 class Main extends React.Component{
@@ -15,7 +22,6 @@ class Main extends React.Component{
 
     constructor(props) {
         super(props);
-        console.log('constructor');
         this.state = {
             page:'welcome',
             data: null,
@@ -31,6 +37,7 @@ class Main extends React.Component{
                     <div>
                         <WelcomeMessage/>
                         <Upload updatePage={this.updatePage} setData={this.setData}/>
+                        <div style={footer}>Made with 🐘 by Lawrence</div>
                     </div>
                 );
             case 'settings':
@@ -50,7 +57,7 @@ class Main extends React.Component{
     setData = data => this.setState({data: data});
 
     render() {
-        const {page, data} = this.state;
+        const {page} = this.state;
         return(
             <div style={divStyle}>
                 {this.switcher(page)}

@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import {Switch, Slider} from '@material-ui/core'
+import {getAPIBase} from "./helpers";
+import 'whatwg-fetch'
 
 const nextButton = {
     marginTop: '20px'
@@ -85,7 +87,6 @@ class Settings extends React.Component{
     ];
 
     noneSelected = () => {
-        console.log('noneselected');
         const {mon, tue, wed, thu, fri, sat, sun} = this.state;
         return (!mon && !tue && !wed && !thu && !fri && !sat && !sun);
     };
@@ -106,11 +107,21 @@ class Settings extends React.Component{
     }
 
     makeAPICall = () => {
-        console.log(this.props);
-        console.log(this.state);
         this.props.updatePage('results')
+        fetch(getAPIBase(), {
+            method: 'POST',
+            body: JSON.stringify({
+                csvData: this.props.data,
+                settings: this.state
+            })})
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.props.updateResponse(responseJson);})
+            .catch((error) => {
+                console.error(error);});
     };
 
+    // fetch()
 
     render() {
         const {updatePage} = this.props;
