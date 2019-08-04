@@ -1,13 +1,14 @@
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-def getPlot(csvData):
+
+def getPlot(csvData, settings):
     data = dict()
     for i in csvData:
         if 'Date' in i and i['Date'] != '' and 'Balance' in i and i['Balance'] != '':
@@ -20,16 +21,41 @@ def getPlot(csvData):
                 data[stringDT] = i['Balance'] if i['Balance'] > data[stringDT] else data[stringDT]
 
     list = []
+
     for i in data:
-        list.insert(0,{
+        list.insert(0, {
+                         'label': data[i],
                          'x': i,
                          'y': data[i]
                      })
 
+    startDate = datetime.strptime('12/01/2018', '%m/%d/%Y')
+    endDate = datetime.strptime('12/31/2018', '%m/%d/%Y')
+    numMeals = settings['mealPlan']
+    timeD = endDate - startDate
+    perDay = numMeals / timeD.days
+    currDate = startDate
+    currMeals = numMeals
+
+    list2 = []
+    while currDate < endDate:
+        list2.append({
+            'x': currDate.strftime('%Y-%m-%d'),
+            'y': round(currMeals, 0)
+        })
+        currMeals = currMeals - perDay
+        currDate = currDate + timedelta(days=1)
+
+    print(list2)
     return ([{
         'id': 'Your Usage',
         'data': list
-    }])
+    },
+        {
+            'id': 'Ideal Usage',
+            'data': list2
+        }
+    ])
 
 def getCalendar(csvData):
     data = dict()
@@ -81,7 +107,7 @@ class HelloWorld(Resource):
 
         return {
             'plot': {
-                'data': getPlot(csvData)
+                'data': getPlot(csvData, settings)
             },
 
             'stats': {
