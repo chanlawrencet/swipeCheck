@@ -3,14 +3,14 @@ import Button from "@material-ui/core/Button";
 import { CircularProgress } from '@material-ui/core';
 import {ResponsivePie} from '@nivo/pie';
 import {ResponsiveCalendar} from "@nivo/calendar";
-import {ResponsiveLine} from "@nivo/line";
-
+import {Line} from "@nivo/line";
 const calendarStyle = {
     height:'150px'
 };
 
 const plotStyle = {
-    height:'300px'
+    // fontFamily: "sans-serif",
+    // textAlign: "center"
 };
 
 const bottomButton = {
@@ -31,14 +31,21 @@ class Results extends React.Component{
         console.log(response)
 
         const calendarData = this.props.response.stats.calendar;
-        const plotData = this.props.response.plot;
+        const plotData = this.props.response.plot.data;
+        console.log(plotData);
         return(
             <div>
+                <h1>Your Results:</h1>
                 <div style={plotStyle}>
-                    <ResponsiveLine
-                        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-                        data={plotData.data}
-                        isInteractive={true}
+                    <Line
+                        width={800}
+                        height={400}
+                        margin={{ top: 60, right: 80, bottom: 60, left: 80 }}
+                        // xScale={{ "type": "time", "format": "%Y-%m-%d", "precision": "day" }}
+                        axisTop={null}
+                        axisRight={null}
+                        // enablePointLabel={true}
+                        data={plotData}
                     />
                 </div>
                 <div style={calendarStyle}>

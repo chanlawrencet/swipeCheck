@@ -127,7 +127,7 @@ class Settings extends React.Component{
         const {updatePage} = this.props;
         return (
             <div>
-                <h2>Set Settings:</h2>
+                <h2>Projection Settings:</h2>
                 <div style={listStyle}>
                     <div style={diningHallStyle}>
                         Avg. Days At Dining Hall
