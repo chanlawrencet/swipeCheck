@@ -2,6 +2,10 @@
   "name": "swipe-check",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.10.0",
+    "node": "10.16.0"
+  },
   "dependencies": {
     "@material-ui/core": "^4.3.1",
     "@nivo/calendar": "^0.59.1",
