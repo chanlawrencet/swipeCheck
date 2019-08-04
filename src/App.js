@@ -1,22 +1,35 @@
 import React from 'react';
 import './App.css';
-import WelcomeMessage from './components/Welcome';
-import Upload from './components/Upload';
 import HowTo from './components/HowTo'
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
-import Configure from "./components/Configure";
+import Main from "./components/Main";
+import disableBrowserBackButton from "disable-browser-back-navigation";
 
-function App() {
-  return (
-      <BrowserRouter>
-          <Switch>
-              <Route exact path='/' component={WelcomeMessage} />
-              <Route exact path='/upload' component={Upload} />
-              <Route exact path='/howTo' component={HowTo} />
-              <Route exact path='/configure' component={Configure} />
-          </Switch>
-      </BrowserRouter>
-  );
+const footer = {
+    position: 'fixed',
+    left: '0',
+    bottom: '10px',
+    width: '100%',
+    textAlign: 'center',
+};
+
+class App extends React.Component{
+
+    componentDidMount() {
+        disableBrowserBackButton();
+    }
+
+    render() {
+        return (
+            <BrowserRouter >
+                <Switch>
+                    <Route exact path='/howTo' component={HowTo} />
+                    <Route exact path='/' component={Main} />
+                </Switch>
+                <div style={footer}>Made with 🐘 by Lawrence</div>
+            </BrowserRouter>
+
+        );
+    }
 }
-
 export default App;

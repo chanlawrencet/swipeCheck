@@ -1,14 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import Papa from 'papaparse';
 
-const divStyle = {
-    textAlign : 'center',
-    marginTop: '20vh',
-};
-
-const backStyled = {
-    marginTop: '70px'
-};
 const howToStyled = {
     marginTop: '50px'
 };
@@ -16,25 +9,37 @@ const fileUploadMessageStyle = {
     marginTop: '50px'
 };
 
-class Upload extends React.Component {
+class Upload extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        console.log('constructor');
         this.state = {selectedFile:null};
     }
-    //https://medium.com/ecmastack/uploading-files-with-react-js-and-node-js-e7e6b707f4ef
+
     handleFileUpload = (event) =>{
         this.setState({selectedFile:event.target.files[0]})
     };
 
+    importCSV = () => {
+        const { selectedFile } = this.state;
+        Papa.parse(selectedFile, {
+            complete: this.updateData,
+            header: true
+        });
+    };
+
+    updateData = (result) => {
+        const data = result.data;
+        const {updatePage, setData} = this.props;
+        updatePage('settings');
+        setData(data);
+    };
+
     render() {
-        console.log(this.state);
         const {selectedFile} = this.state;
         return (
-            <div style={divStyle}>
-                <h1>Let's get started!</h1>
-                <br/>
+            <div>
+                <h2>Upload CSV:</h2>
                 <Button
                     variant="outlined"
                     component="label"
@@ -44,6 +49,7 @@ class Upload extends React.Component {
                         type="file"
                         style={{ display: "none" }}
                         onChange={this.handleFileUpload}
+                        accept='text/csv'
                     />
                 </Button>
                 <div style={fileUploadMessageStyle}>
@@ -55,8 +61,8 @@ class Upload extends React.Component {
                                 {selectedFile.type !== 'text/csv' ? (
                                     <div>Oops! You have to upload a .csv file!</div>
                                 ):(
-                                    <Button variant="outlined" color="primary" href={'/configure'} onClick={()=>{console.log('clicked!');}}>
-                                        upload
+                                    <Button variant="outlined" color="primary" onClick={this.importCSV}>
+                                        continue
                                     </Button>
                                 )}
                             </div>
@@ -65,11 +71,6 @@ class Upload extends React.Component {
                 </div>
                 <div style={howToStyled}>
                     <a href='/howTo'>How do I find this file?</a>
-                </div>
-                <div style={backStyled}>
-                    <Button variant="outlined" color="primary" href={'/'}>
-                        home
-                    </Button>
                 </div>
             </div>
         );
