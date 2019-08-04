@@ -29,7 +29,7 @@ def getPlot(csvData, settings):
                          'y': data[i]
                      })
 
-    startDate = datetime.strptime('12/01/2018', '%m/%d/%Y')
+    startDate = datetime.strptime('09/01/2018', '%m/%d/%Y')
     endDate = datetime.strptime('12/31/2018', '%m/%d/%Y')
     numMeals = settings['mealPlan']
     timeD = endDate - startDate
