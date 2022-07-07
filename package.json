@@ -12,7 +12,7 @@
     "@nivo/line": "^0.59.3",
     "@nivo/pie": "^0.59.1",
     "disable-browser-back-navigation": "^0.1.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "papaparse": "^5.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
